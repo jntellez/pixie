@@ -7,6 +7,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { GoHome } from "react-icons/go";
+import { RxDashboard } from "react-icons/rx";
+import { RiSettings4Line } from "react-icons/ri";
+import { TbBrandGithub } from "react-icons/tb";
+import { PiBugBeetle } from "react-icons/pi";
+import { TbLogout } from "react-icons/tb";
 
 export default function UserMenu() {
     return (
@@ -29,10 +35,32 @@ export default function UserMenu() {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>View project</DropdownMenuItem>
-                <DropdownMenuItem>Report a bug</DropdownMenuItem>
-                <DropdownMenuItem>Log out</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <GoHome />
+                    <span>Home</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <RxDashboard />
+                    <span>Dashboard</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <RiSettings4Line />
+                    <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                    <TbBrandGithub />
+                    <span>View project</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <PiBugBeetle />
+                    <span>Report a bug</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                    <TbLogout />
+                    <span>Log out</span>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
