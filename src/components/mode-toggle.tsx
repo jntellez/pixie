@@ -11,6 +11,9 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { FiSun } from "react-icons/fi";
+import { FiMoon } from "react-icons/fi";
+import { FiMonitor } from "react-icons/fi";
 
 export function ModeToggle() {
     const { setTheme } = useTheme()
@@ -26,13 +29,16 @@ export function ModeToggle() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
+                    <FiSun />
+                    <span>Light</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
+                    <FiMoon />
+                    <span>Dark</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
+                    <FiMonitor />
+                    <span>System</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
