@@ -1,11 +1,11 @@
 import { Logo } from "@/components/icons/logo";
-import ThemeToggle from "@/components/layout/header/theme-toggle";
-import UserMenu from "@/components/layout/header/user-menu";
+import { ModeToggle } from "@/components/mode-toggle";
+import UserMenu from "@/components/user-menu";
 import Link from "next/link";
 
 export default function Header() {
     return (
-        <header className="dark:bg-zinc-900">
+        <header className="dark:bg-slate-900 border-b-[1px] border-zinc-200 dark:border-slate-800">
             <div className="flex flex-row justify-between py-4 container">
                 <div className="">
                     <Link href="/" className="flex flex-row items-center">
@@ -14,7 +14,7 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className="flex flex-row items-center space-x-5">
-                    <ThemeToggle />
+                    <ModeToggle />
                     <UserMenu />
                 </div>
             </div>
