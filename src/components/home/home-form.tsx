@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { toast } from "@/hooks/use-toast"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { CreateLinkSchema } from "../../../server/schemas"
 import { TbLink } from "react-icons/tb";
 import { FiArrowRight } from "react-icons/fi";
+import Link from "next/link"
 
 export function HomeForm() {
     const form = useForm<z.infer<typeof CreateLinkSchema>>({
@@ -59,7 +60,13 @@ export function HomeForm() {
                     />
                     <div className="flex justify-between space-x-4">
                         <Button className="w-full" variant="outline" type="submit"><TbLink />Short Link</Button>
-                        <Button className="w-full" type="button"><FiArrowRight />Sign In</Button>
+                        <Link
+                            href="/dashboard"
+                            className={buttonVariants({
+                                variant: "default",
+                                className: "w-full",
+                            })}
+                        ><FiArrowRight />Sign In</Link>
                     </div>
                 </form>
             </Form>
