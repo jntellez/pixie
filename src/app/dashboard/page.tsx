@@ -6,9 +6,12 @@ export default async function DashboardPage(props: {
     }>;
 }) {
     const searchParams = await props.searchParams
-    // const query = searchParams?.query || ''
+    const query = searchParams?.query || ''
 
     return (
-        <p>Links</p>
+        <div>
+            <h1>Dashboard</h1>
+            <p>Search query: {query}</p>
+        </div>
     )
 }
