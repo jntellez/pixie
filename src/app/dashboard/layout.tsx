@@ -11,7 +11,9 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
                 <Suspense fallback={<p>Loading...</p>}>
                     <SearchLink />
                 </Suspense>
-                <SortLinks />
+                <Suspense fallback={<p>Loading...</p>}>
+                    <SortLinks />
+                </Suspense>
                 <ViewMode />
                 <CreateLink />
             </div>
