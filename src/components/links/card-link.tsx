@@ -2,6 +2,23 @@ import type { Link } from "@prisma/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { LuCopy } from "react-icons/lu";
 import { RiMoreFill } from "react-icons/ri";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { FiEdit } from "react-icons/fi";
+import { IoLinkOutline } from "react-icons/io5";
+import { LuQrCode } from "react-icons/lu";
+import { MdOutlineDelete } from "react-icons/md";
+
+export const linkOptions = [
+    { title: "Edit", icon: FiEdit, className: "" },
+    { title: "Copy short link", icon: IoLinkOutline, className: "" },
+    { title: "Copy QR code", icon: LuQrCode, className: "" },
+    { title: "Delete", icon: MdOutlineDelete, className: "text-red-600" },
+];
 
 interface CardLinkProps {
     link: Link;
@@ -31,7 +48,20 @@ export function CardLink({ link }: CardLinkProps) {
                     </div>
                     <div className="flex gap-2 items-center">
                         <p className="text-xs">{link.clicks} clicks</p>
-                        <RiMoreFill size={18} />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
+                                <RiMoreFill size={18} />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                {linkOptions.map((option, index) => (
+                                    <DropdownMenuItem key={index} className={option.className}>
+                                        <option.icon />
+                                        {option.title}
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
                     </div>
                 </div>
                 <p className="text-sm">{link.url}</p>
