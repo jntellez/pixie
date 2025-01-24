@@ -19,7 +19,7 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
                 </Suspense>
                 <CreateLink />
             </div>
-            <div>{props.children}</div>
+            {props.children}
         </main>
     )
 }
