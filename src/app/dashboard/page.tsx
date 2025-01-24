@@ -1,4 +1,6 @@
 import { CardLink } from "@/components/links/card-link";
+import { ListLink } from "@/components/links/list-link";
+import { cn } from "@/lib/utils";
 
 export default async function DashboardPage(props: {
     searchParams?: Promise<{
@@ -9,7 +11,8 @@ export default async function DashboardPage(props: {
 }) {
     const searchParams = await props.searchParams
     const query = searchParams?.query || ''
-    const sort = searchParams?.sort || ''
+    const sort = searchParams?.sort || 'date'
+    const view = searchParams?.view || 'grid'
 
     const filteredLinks = links.filter(link => {
         if (query !== '') {
@@ -29,8 +32,12 @@ export default async function DashboardPage(props: {
     })
 
     return (
-        <div className="grid container grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredLinks.map((link) => <CardLink key={link.id} link={link} />)}
+        <div className={cn("grid container grid-cols-1 gap-4",
+            view === 'grid' && 'sm:grid-cols-2 lg:grid-cols-3'
+        )}>
+            {filteredLinks.map((link) => view === 'grid'
+                ? <CardLink key={link.id} link={link} />
+                : <ListLink key={link.id} link={link} />)}
         </div>
     )
 }
