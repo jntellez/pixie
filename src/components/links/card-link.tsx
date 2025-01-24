@@ -9,13 +9,13 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { FiEdit } from "react-icons/fi";
-import { IoLinkOutline } from "react-icons/io5";
 import { LuQrCode } from "react-icons/lu";
 import { MdOutlineDelete } from "react-icons/md";
+import { Button } from "../ui/button";
 
 export const linkOptions = [
     { title: "Edit", icon: FiEdit, className: "" },
-    { title: "Copy short link", icon: IoLinkOutline, className: "" },
+    { title: "Copy short link", icon: LuCopy, className: "" },
     { title: "Copy QR code", icon: LuQrCode, className: "" },
     { title: "Delete", icon: MdOutlineDelete, className: "text-red-600" },
 ];
@@ -40,14 +40,17 @@ export function CardLink({ link }: CardLinkProps) {
                             href={link.shortUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center text-md text-zinc-500 dark:text-slate-500 hover:underline"
+                            className="flex items-center text-md text-zinc-500 dark:text-white hover:underline"
                         >
-                            <p>{link.shortUrl}</p>
+                            <span>/</span>
+                            <p>{link.shortUrl.split('/').slice(-1)}</p>
                         </a>
-                        <LuCopy />
+                        <Button variant="ghost" className="p-0 h-fit hover:bg-transparent hover:text-zinc-500 dark:hover:text-slate-300">
+                            <LuCopy />
+                        </Button>
                     </div>
                     <div className="flex gap-2 items-center">
-                        <p className="text-xs">{link.clicks} clicks</p>
+                        <p className="text-xs text-slate-200">{link.clicks} clicks</p>
                         <DropdownMenu>
                             <DropdownMenuTrigger>
                                 <RiMoreFill size={18} />
@@ -64,10 +67,10 @@ export function CardLink({ link }: CardLinkProps) {
 
                     </div>
                 </div>
-                <p className="text-sm">{link.url}</p>
+                <p className="text-sm text-slate-400">{link.url}</p>
                 <div className="flex flex-row justify-between items-center">
-                    <p className="text-xs">{link.description}</p>
-                    <p className="text-xs">{dateWithFormat}</p>
+                    <p className="text-xs text-slate-400">{link.description}</p>
+                    <p className="text-xs text-slate-400">{dateWithFormat}</p>
                 </div>
             </CardContent>
         </Card>
