@@ -13,6 +13,7 @@ import { RiSettings4Line } from "react-icons/ri";
 import { TbBrandGithub } from "react-icons/tb";
 import { PiBugBeetle } from "react-icons/pi";
 import { TbLogout } from "react-icons/tb";
+import Link from "next/link";
 
 export default function UserMenu() {
     return (
@@ -35,17 +36,23 @@ export default function UserMenu() {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    <GoHome />
-                    <span>Home</span>
+                <DropdownMenuItem asChild>
+                    <Link href="/">
+                        <GoHome />
+                        <span>Home</span>
+                    </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <RxDashboard />
-                    <span>Dashboard</span>
+                <DropdownMenuItem asChild>
+                    <Link href="/dashboard">
+                        <RxDashboard />
+                        <span>Dashboard</span>
+                    </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <RiSettings4Line />
-                    <span>Settings</span>
+                <DropdownMenuItem asChild>
+                    <Link href="/settings">
+                        <RiSettings4Line />
+                        <span>Settings</span>
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
