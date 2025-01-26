@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import DeleteAccountDialog from "@/components/settings/delete-acount-dialog";
 
-export default function SettingsPage() {
+export default function DeleteAccountCard() {
     return (
         <Card>
             <CardHeader>
