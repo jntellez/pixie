@@ -18,9 +18,10 @@ export default function CreateLink() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="secondary" className="">
-                    <GiDwarfFace />
-                    <span>Create Link</span>
+                <Button variant="secondary">
+                    <GiDwarfFace className="hidden sm:block" />
+                    <span className="hidden sm:block">Create Link</span>
+                    <span className="block sm:hidden">Add</span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -53,13 +54,13 @@ export default function CreateLink() {
                         <Textarea placeholder="Type short link description here (optional)" id="description" />
                     </div>
                 </div>
-                <DialogFooter>
+                <DialogFooter className="gap-2">
                     <DialogClose asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogClose>
                     <Button>
                         <GiDwarfFace />
-                        <span>Create Link</span>
+                        Create Link
                     </Button>
                 </DialogFooter>
             </DialogContent>

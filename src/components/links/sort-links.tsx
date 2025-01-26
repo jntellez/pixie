@@ -46,9 +46,11 @@ export default function SortLinks() {
 
     return (
         <Select defaultValue={currentSort} onValueChange={handleSortChange}>
-            <SelectTrigger className="flex max-w-[340px] items-center space-x-2">
+            <SelectTrigger className="flex w-fit sm:w-full sm:max-w-[340px] items-center space-x-2">
                 {getIcon(currentSort)}
-                <SelectValue placeholder={`Sort by ${currentSort}`} />
+                <div className="hidden sm:block">
+                    <SelectValue placeholder={`Sort by ${currentSort}`} />
+                </div>
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>

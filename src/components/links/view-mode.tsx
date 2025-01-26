@@ -27,7 +27,7 @@ export default function ViewMode() {
     };
 
     return (
-        <Card className="rounded-md">
+        <Card className="rounded-md hidden sm:block">
             <CardContent className="flex p-1 space-x-1">
                 <Button
                     variant="ghost"
