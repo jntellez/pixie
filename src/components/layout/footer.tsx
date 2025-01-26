@@ -3,7 +3,7 @@ import ExternalLink from "../ui/external-link";
 
 export default function Footer() {
     return (
-        <footer className="bg-white dark:bg-slate-950 border-t-[1px] border-zinc-200 dark:border-slate-800 text-white absolute bottom-0 w-full py-5">
+        <footer className="bg-white dark:bg-slate-950 border-t-[1px] border-zinc-200 dark:border-slate-800 text-white  py-5">
             <div className="flex container justify-between">
                 <ExternalLink
                     href="https://github.com/jntellez/pixie"

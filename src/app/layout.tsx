@@ -38,7 +38,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <main className="flex flex-col bg-white dark:bg-slate-950 items-center min-h-[calc(100vh-8.2rem)] gap-6 pt-6 font-[family-name:var(--font-geist-sans)]">
+            {children}
+          </main>
           <Footer />
           <Toaster />
         </ThemeProvider>
