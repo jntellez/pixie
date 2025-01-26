@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Header() {
     return (
-        <header className="dark:bg-slate-900 border-b-[1px] border-zinc-200 dark:border-slate-800">
+        <header className="dark:bg-slate-900 border-b-[1px] border-slate-200 dark:border-slate-800">
             <div className="flex flex-row justify-between py-4 container">
                 <div className="">
                     <Link href="/" className="flex flex-row items-center">

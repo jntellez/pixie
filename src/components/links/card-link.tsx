@@ -40,7 +40,7 @@ export function CardLink({ link }: CardLinkProps) {
                             href={link.shortUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center text-md text-zinc-500 dark:text-white hover:underline"
+                            className="flex items-center text-md text-black dark:text-white hover:underline"
                         >
                             <span>/</span>
                             <p>{link.shortUrl.split('/').slice(-1)}</p>
@@ -50,7 +50,7 @@ export function CardLink({ link }: CardLinkProps) {
                         </Button>
                     </div>
                     <div className="flex gap-2 items-center">
-                        <p className="text-xs text-slate-200">{link.clicks} clicks</p>
+                        <p className="text-xs text-slate-800 dark:text-slate-200">{link.clicks} clicks</p>
                         <DropdownMenu>
                             <DropdownMenuTrigger>
                                 <RiMoreFill size={18} />
@@ -67,10 +67,10 @@ export function CardLink({ link }: CardLinkProps) {
 
                     </div>
                 </div>
-                <p className="text-sm text-slate-400">{link.url}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{link.url}</p>
                 <div className="flex flex-row justify-between items-center">
-                    <p className="text-xs text-slate-400">{link.description}</p>
-                    <p className="text-xs text-slate-400">{dateWithFormat}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{link.description}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{dateWithFormat}</p>
                 </div>
             </CardContent>
         </Card>
