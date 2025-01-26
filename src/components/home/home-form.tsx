@@ -42,10 +42,10 @@ export function HomeForm() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center space-y-6 w-2/4">
-            <p className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">Paste the url you want to shorten</p>
+        <div className="flex flex-col items-center justify-center space-y-6 w-full md:w-3/4 lg:w-2/4">
+            <p className="scroll-m-20 pb-2 text-2xl text-center font-semibold tracking-tight first:mt-0">Paste the url you want to shorten</p>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/4 space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="w-full xl:w-2/4 px-6 space-y-6">
                     <FormField
                         control={form.control}
                         name="url"
