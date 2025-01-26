@@ -12,6 +12,7 @@ import { FiEdit } from "react-icons/fi";
 import { LuQrCode } from "react-icons/lu";
 import { MdOutlineDelete } from "react-icons/md";
 import { Button } from "../ui/button";
+import ExternalLink from "../ui/external-link";
 
 export const linkOptions = [
     { title: "Edit", icon: FiEdit, className: "" },
@@ -36,15 +37,13 @@ export function CardLink({ link }: CardLinkProps) {
             <CardContent className="flex flex-col gap-2 p-5">
                 <div className="flex flex-row justify-between items-center">
                     <div className="flex gap-2 items-center">
-                        <a
+                        <ExternalLink
                             href={link.shortUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             className="flex items-center text-md text-black dark:text-white hover:underline"
                         >
                             <span>/</span>
                             <p>{link.shortUrl.split('/').slice(-1)}</p>
-                        </a>
+                        </ExternalLink>
                         <Button variant="ghost" className="p-0 h-fit hover:bg-transparent hover:text-zinc-500 dark:hover:text-slate-300">
                             <LuCopy />
                         </Button>

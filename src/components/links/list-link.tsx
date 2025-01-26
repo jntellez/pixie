@@ -2,6 +2,7 @@ import { Link } from "@prisma/client";
 import { linkOptions } from "@/components/links/card-link";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
+import ExternalLink from "../ui/external-link";
 
 interface ListLinkProps {
     link: Link;
@@ -18,15 +19,13 @@ export function ListLink({ link }: ListLinkProps) {
         <Card>
             <CardContent className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] p-5 gap-4 items-center">
                 <div>
-                    <a
+                    <ExternalLink
                         href={link.shortUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="text-md text-black dark:text-white hover:underline"
                     >
                         <span>/</span>
                         {link.shortUrl.split("/").slice(-1)}
-                    </a>
+                    </ExternalLink>
                     <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{link.url}</p>
                 </div>
 
