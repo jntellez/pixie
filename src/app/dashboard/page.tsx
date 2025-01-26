@@ -16,9 +16,10 @@ export default async function DashboardPage(props: {
 
     const filteredLinks = links.filter(link => {
         if (query !== '') {
-            return link.shortUrl.toLowerCase().includes(query)
-                || link.url.toLowerCase().includes(query)
-                || link.description.toLowerCase().includes(query)
+            const lowerCaseQuery = query.toLowerCase()
+            return link.shortUrl.toLowerCase().includes(lowerCaseQuery)
+                || link.url.toLowerCase().includes(lowerCaseQuery)
+                || link.description.toLowerCase().includes(lowerCaseQuery)
         }
         return link
     }).sort((a, b) => {
