@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
@@ -11,6 +13,7 @@ import {
 import { Logo } from "@/components/icons/logo"
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
     return (
@@ -24,13 +27,17 @@ export default function LoginPage() {
                     <CardDescription>Log in with your preferred option:</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 justify-center text-center">
-                    <Button variant="outline" className="w-full"><FcGoogle />Log in with Google</Button>
+                    <Button variant="outline" onClick={() => signIn("google")} className="w-full">
+                        <FcGoogle />Log in with Google
+                    </Button>
                     <div className="flex items-center justify-center space-x-2 mt-6">
                         <div className="border-t-[1px] border-slate-300 dark:border-slate-700 flex-grow"></div>
                         <p className="text-sm text-slate-500 dark:text-slate-400">or</p>
                         <div className="border-t-[1px] border-slate-300 dark:border-slate-700 flex-grow"></div>
                     </div>
-                    <Button variant="outline" className="w-full"><IoLogoGithub />Log in with GitHub</Button>
+                    <Button variant="outline" className="w-full">
+                        <IoLogoGithub />Log in with GitHub
+                    </Button>
                 </CardContent>
             </Card>
         </main>

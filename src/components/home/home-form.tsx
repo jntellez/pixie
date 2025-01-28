@@ -14,7 +14,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { CreateLinkSchema } from "../../../server/schemas"
+import { CreateLinkSchema } from "@/server/schemas"
 import { TbLink } from "react-icons/tb";
 import { FiArrowRight } from "react-icons/fi";
 import Link from "next/link"
