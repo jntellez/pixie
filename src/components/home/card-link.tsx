@@ -1,4 +1,3 @@
-// components/card-link.tsx
 import type { Link } from "@prisma/client"
 import { Card, CardContent } from "@/components/ui/card"
 import { LuCopy } from "react-icons/lu"
@@ -40,7 +39,7 @@ export function CardLink({ link }: CardLinkProps) {
                     <div className="flex flex-row justify-between items-center">
                         <div className="flex gap-2 items-center">
                             <ExternalLink
-                                href={`/${link.shortUrl}`}
+                                href={`http://localhost:3000/${link.shortUrl}`} // CAMBIAR URL
                                 className="flex items-center text-md text-black dark:text-white hover:underline"
                             >
                                 <span>/</span>
