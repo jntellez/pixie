@@ -1,11 +1,13 @@
 import * as z from "zod";
 
 export const LinkSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   url: z.string().url(),
   shortUrl: z.string(),
   description: z.string().optional(),
 });
+
+// export type Link = z.infer<typeof LinkSchema>;
 
 export const CreateLinkSchema = z.object({
   url: z
