@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { db } from "@/server/utils/db"
 
 type Props = {
@@ -15,13 +15,7 @@ export default async function RedirectPage({ params }: Props) {
     })
 
     if (!link) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <h1 className="text-2xl font-semibold text-red-600">
-                    Link not found 😢
-                </h1>
-            </div>
-        )
+        notFound()
     }
 
     await db.link.update({
