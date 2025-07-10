@@ -1,3 +1,5 @@
+"use client"
+
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
     DropdownMenu,
@@ -14,6 +16,7 @@ import { TbBrandGithub } from "react-icons/tb";
 import { PiBugBeetle } from "react-icons/pi";
 import { TbLogout } from "react-icons/tb";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export default function UserMenu() {
     return (
@@ -64,7 +67,7 @@ export default function UserMenu() {
                     <span>Report a bug</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
                     <TbLogout />
                     <span>Log out</span>
                 </DropdownMenuItem>

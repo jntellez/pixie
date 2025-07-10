@@ -1,3 +1,4 @@
+// src/app/auth/page.tsx
 "use client"
 
 import * as React from "react"
@@ -35,7 +36,7 @@ export default function LoginPage() {
                         <p className="text-sm text-slate-500 dark:text-slate-400">or</p>
                         <div className="border-t-[1px] border-slate-300 dark:border-slate-700 flex-grow"></div>
                     </div>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" onClick={() => signIn("github")} className="w-full">
                         <IoLogoGithub />Log in with GitHub
                     </Button>
                 </CardContent>

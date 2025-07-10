@@ -62,7 +62,7 @@ export function HomeForm() {
                         <TbLink /> Short Link
                     </Button>
                     <Link
-                        href="/dashboard"
+                        href="/auth"
                         className={buttonVariants({
                             variant: "default",
                             className: "w-full",
