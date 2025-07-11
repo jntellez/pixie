@@ -28,7 +28,7 @@ export default function LoginPage() {
                     <CardDescription>Log in with your preferred option:</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 justify-center text-center">
-                    <Button variant="outline" onClick={() => signIn("google")} className="w-full">
+                    <Button variant="outline" onClick={() => signIn("google", { callbackUrl: "/dashboard" })} className="w-full">
                         <FcGoogle />Log in with Google
                     </Button>
                     <div className="flex items-center justify-center space-x-2 mt-6">
@@ -36,7 +36,10 @@ export default function LoginPage() {
                         <p className="text-sm text-slate-500 dark:text-slate-400">or</p>
                         <div className="border-t-[1px] border-slate-300 dark:border-slate-700 flex-grow"></div>
                     </div>
-                    <Button variant="outline" onClick={() => signIn("github")} className="w-full">
+                    <Button variant="outline" onClick={() => signIn("github", {
+                        prompt: "consent",
+                        callbackUrl: "/dashboard"
+                    })} className="w-full">
                         <IoLogoGithub />Log in with GitHub
                     </Button>
                 </CardContent>

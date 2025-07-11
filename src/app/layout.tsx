@@ -5,6 +5,7 @@ import Header from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
 import Footer from "@/components/layout/footer";
+import { AuthSessionProvider } from "@/components/session-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,12 +38,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex flex-col bg-white dark:bg-slate-950 items-center min-h-[calc(100vh-8.2rem)] gap-6 pt-6 font-[family-name:var(--font-geist-sans)]">
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
+          <AuthSessionProvider>
+            <Header />
+            <main className="flex flex-col bg-white dark:bg-slate-950 items-center min-h-[calc(100vh-8.2rem)] gap-6 pt-6 font-[family-name:var(--font-geist-sans)]">
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>

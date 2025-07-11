@@ -2,14 +2,15 @@
 
 import { useActionState, useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
-import { Button, buttonVariants } from "@/components/ui/button"
-import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import { FiArrowRight } from "react-icons/fi"
 import { TbLink } from "react-icons/tb"
 import { createPublicLink, State as LinkState } from "@/server/actions/links"
 import { CardLink } from "./card-link"
 import { Link as LinkType } from "@prisma/client"
 import { getLinkByShortUrl } from "@/server/data/links"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const initialState: LinkState = {
     message: null,
@@ -20,6 +21,8 @@ const initialState: LinkState = {
 export function HomeForm() {
     const [state, formAction] = useActionState(createStoragedLink, initialState)
     const [link, setLink] = useState<LinkType | null>(null)
+    const { data: session } = useSession()
+    const router = useRouter()
 
     useEffect(() => {
         const loadStoredLink = async () => {
@@ -61,15 +64,13 @@ export function HomeForm() {
                     <Button className="w-full" variant="outline" type="submit">
                         <TbLink /> Short Link
                     </Button>
-                    <Link
-                        href="/auth"
-                        className={buttonVariants({
-                            variant: "default",
-                            className: "w-full",
-                        })}
+                    <Button
+                        variant="default"
+                        className="w-full"
+                        onClick={() => session?.user ? router.push("/dashboard") : router.push("/auth")}
                     >
                         <FiArrowRight /> Sign In
-                    </Link>
+                    </Button>
                 </div>
             </form>
 

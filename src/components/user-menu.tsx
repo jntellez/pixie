@@ -67,7 +67,7 @@ export default function UserMenu() {
                     <span>Report a bug</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+                <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/", redirect: true })}>
                     <TbLogout />
                     <span>Log out</span>
                 </DropdownMenuItem>
