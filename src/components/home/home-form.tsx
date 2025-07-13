@@ -61,7 +61,12 @@ export function HomeForm() {
                 </div>
 
                 <div className="flex justify-between space-x-4">
-                    <Button className="w-full" variant="outline" type="submit">
+                    <Button className="w-full" variant="outline" type="submit" onClick={e => {
+                        if (session?.user) {
+                            e.preventDefault()
+                            router.push("/dashboard")
+                        }
+                    }}>
                         <TbLink /> Short Link
                     </Button>
                     <Button

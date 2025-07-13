@@ -1,3 +1,5 @@
+"use client"
+
 import type { Link } from "@prisma/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { LuCopy } from "react-icons/lu";
@@ -13,24 +15,21 @@ import { LuQrCode } from "react-icons/lu";
 import { MdOutlineDelete } from "react-icons/md";
 import { Button } from "../ui/button";
 import ExternalLink from "../ui/external-link";
+import { getDateWithFormat, handleLinkOptionClick } from "@/lib/utils";
 
 export const linkOptions = [
-    { title: "Edit", icon: FiEdit, className: "" },
-    { title: "Copy short link", icon: LuCopy, className: "" },
-    { title: "Copy QR code", icon: LuQrCode, className: "" },
-    { title: "Delete", icon: MdOutlineDelete, className: "text-red-600" },
-];
+    { title: "Edit", icon: FiEdit, className: "", type: "edit" },
+    { title: "Copy short link", icon: LuCopy, className: "", type: "copy" },
+    { title: "Copy QR code", icon: LuQrCode, className: "", type: "qr" },
+    { title: "Delete", icon: MdOutlineDelete, className: "text-red-600", type: "delete" },
+] as const
 
 interface CardLinkProps {
     link: Link;
 }
 
 export function CardLink({ link }: CardLinkProps) {
-    const dateWithFormat = new Date(link.createdAt).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "2-digit",
-    })
+    const dateWithFormat = getDateWithFormat(link.createdAt)
 
     return (
         <Card>
@@ -44,7 +43,11 @@ export function CardLink({ link }: CardLinkProps) {
                             <span>/</span>
                             <p>{link.shortUrl.split('/').slice(-1)}</p>
                         </ExternalLink>
-                        <Button variant="ghost" className="p-0 h-fit hover:bg-transparent hover:text-zinc-500 dark:hover:text-slate-300">
+                        <Button
+                            variant="ghost"
+                            className="p-0 h-fit hover:bg-transparent hover:text-zinc-500 dark:hover:text-slate-300"
+                            onClick={() => handleLinkOptionClick("copy", link)}
+                        >
                             <LuCopy />
                         </Button>
                     </div>
@@ -56,7 +59,7 @@ export function CardLink({ link }: CardLinkProps) {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 {linkOptions.map((option, index) => (
-                                    <DropdownMenuItem key={index} className={option.className}>
+                                    <DropdownMenuItem key={index} className={option.className} onClick={() => handleLinkOptionClick(option.type, link)}>
                                         <option.icon />
                                         {option.title}
                                     </DropdownMenuItem>

@@ -2,35 +2,15 @@ import type { Link } from "@prisma/client"
 import { Card, CardContent } from "@/components/ui/card"
 import { LuCopy } from "react-icons/lu"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { toast } from "@/hooks/use-toast"
 import ExternalLink from "@/components/ui/external-link"
+import { getDateWithFormat, handleLinkOptionClick } from "@/lib/utils"
 
 interface CardLinkProps {
     link: Link
 }
 
 export function CardLink({ link }: CardLinkProps) {
-    const [copied, setCopied] = useState(false)
-
-    const dateWithFormat = new Date(link.createdAt).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "2-digit",
-    })
-
-    const handleCopy = async () => {
-        const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${link.shortUrl}`
-        await navigator.clipboard.writeText(fullUrl)
-        setCopied(true)
-
-        toast({
-            title: "Copied!",
-            description: fullUrl,
-        })
-
-        setTimeout(() => setCopied(false), 2000)
-    }
+    const dateWithFormat = getDateWithFormat(link.createdAt)
 
     return (
         <div className="px-5 w-full xl:w-2/4">
@@ -48,9 +28,9 @@ export function CardLink({ link }: CardLinkProps) {
                             <Button
                                 variant="ghost"
                                 className="p-0 h-fit hover:bg-transparent hover:text-zinc-500 dark:hover:text-slate-300"
-                                onClick={handleCopy}
+                                onClick={() => handleLinkOptionClick("copy", link)}
                             >
-                                <LuCopy className={copied ? "text-green-500" : ""} />
+                                <LuCopy />
                             </Button>
                         </div>
                         <p className="text-xs text-slate-800 dark:text-slate-200">{link.clicks} clicks</p>

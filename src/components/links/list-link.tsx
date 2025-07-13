@@ -1,19 +1,18 @@
+"use client"
+
 import { Link } from "@prisma/client";
 import { linkOptions } from "@/components/links/card-link";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import ExternalLink from "../ui/external-link";
+import { getDateWithFormat, handleLinkOptionClick } from "@/lib/utils";
 
 interface ListLinkProps {
     link: Link;
 }
 
 export function ListLink({ link }: ListLinkProps) {
-    const dateWithFormat = new Date(link.createdAt).toLocaleDateString("en-US", {
-        month: "long",
-        day: "2-digit",
-        year: "numeric",
-    });
+    const dateWithFormat = getDateWithFormat(link.createdAt)
 
     return (
         <Card>
@@ -41,6 +40,7 @@ export function ListLink({ link }: ListLinkProps) {
                             key={index}
                             variant="ghost"
                             className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs ${option.className}`}
+                            onClick={() => handleLinkOptionClick(option.type, link)}
                         >
                             <option.icon size={18} />
                         </Button>
