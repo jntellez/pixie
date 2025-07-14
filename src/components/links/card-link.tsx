@@ -37,7 +37,7 @@ export function CardLink({ link }: CardLinkProps) {
                 <div className="flex flex-row justify-between items-center">
                     <div className="flex gap-2 items-center">
                         <ExternalLink
-                            href={link.shortUrl}
+                            href={`http://localhost:3000/${link.shortUrl}`}
                             className="flex items-center text-md text-black dark:text-white hover:underline"
                         >
                             <span>/</span>

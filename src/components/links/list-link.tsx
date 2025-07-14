@@ -19,7 +19,7 @@ export function ListLink({ link }: ListLinkProps) {
             <CardContent className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr] p-5 gap-4 items-center">
                 <div>
                     <ExternalLink
-                        href={link.shortUrl}
+                        href={`http://localhost:3000/${link.shortUrl}`}
                         className="text-md text-black dark:text-white hover:underline"
                     >
                         <span>/</span>

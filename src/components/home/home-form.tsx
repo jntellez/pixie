@@ -15,7 +15,9 @@ import { useRouter } from "next/navigation"
 const initialState: LinkState = {
     message: null,
     errors: {},
-    shortUrl: undefined,
+    fields: {
+        shortUrl: undefined,
+    }
 }
 
 export function HomeForm() {
@@ -39,9 +41,10 @@ export function HomeForm() {
     async function createStoragedLink(prevState: LinkState, formData: FormData) {
         const result = await createPublicLink(prevState, formData)
 
-        if (result.shortUrl) {
-            localStorage.setItem("short_url", result.shortUrl)
-            const dbLink = await getLinkByShortUrl(result.shortUrl)
+        const shortUrl = result.fields?.shortUrl
+        if (shortUrl) {
+            localStorage.setItem("short_url", shortUrl)
+            const dbLink = await getLinkByShortUrl(shortUrl)
             setLink(dbLink)
         }
 

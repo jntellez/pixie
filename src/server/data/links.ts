@@ -1,21 +1,23 @@
 "use server";
 
+import { auth } from "@/auth";
 import { db } from "@/server/utils/db";
 import { Link } from "@prisma/client";
 
-export async function getUserLinks(userId: string) {
-  try {
-    const links = await db.link.findMany({
-      where: {
-        userId: userId,
-      },
-    });
-
-    return links;
-  } catch (error) {
-    console.error("Error al recuperar los links del usuario:", error);
-    throw new Error("No se pudieron recuperar los links del usuario.");
+export async function getUserLinks() {
+  const session = await auth();
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized");
   }
+
+  return db.link.findMany({
+    where: {
+      userId: session.user.id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 }
 
 export async function getLinkByShortUrl(
