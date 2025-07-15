@@ -36,7 +36,9 @@ export async function handleLinkOptionClick(type: string, link: Link) {
   switch (type) {
     case "copy":
       try {
-        await navigator.clipboard.writeText(link.shortUrl);
+        await navigator.clipboard.writeText(
+          `${process.env.NEXT_PUBLIC_PAGE_URL}/${link.shortUrl}`
+        );
         toast({
           title: "Copied",
           description: "Short link copied to clipboard.",
@@ -49,7 +51,7 @@ export async function handleLinkOptionClick(type: string, link: Link) {
 
     case "qr":
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-        link.shortUrl
+        `${process.env.NEXT_PUBLIC_PAGE_URL}/${link.shortUrl}`
       )}`;
       const result = await copyQrToClipboard(qrUrl);
       toast({
