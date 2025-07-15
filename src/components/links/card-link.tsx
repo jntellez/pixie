@@ -16,6 +16,9 @@ import { MdOutlineDelete } from "react-icons/md";
 import { Button } from "../ui/button";
 import ExternalLink from "../ui/external-link";
 import { getDateWithFormat, handleLinkOptionClick } from "@/lib/utils";
+import { useState } from "react";
+import { EditLinkModal } from "./edit-link";
+import { DeleteLinkModal } from "./delete-link";
 
 export const linkOptions = [
     { title: "Edit", icon: FiEdit, className: "", type: "edit" },
@@ -30,6 +33,18 @@ interface CardLinkProps {
 
 export function CardLink({ link }: CardLinkProps) {
     const dateWithFormat = getDateWithFormat(link.createdAt)
+    const [editOpen, setEditOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const handleOptionClick = async (type: string) => {
+        if (type === "edit") {
+            setEditOpen(true);
+        } else if (type === "delete") {
+            setDeleteOpen(true);
+        } else {
+            await handleLinkOptionClick(type, link);
+        }
+    };
 
     return (
         <Card>
@@ -59,12 +74,22 @@ export function CardLink({ link }: CardLinkProps) {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 {linkOptions.map((option, index) => (
-                                    <DropdownMenuItem key={index} className={option.className} onClick={() => handleLinkOptionClick(option.type, link)}>
+                                    <DropdownMenuItem key={index} className={option.className} onClick={() => handleOptionClick(option.type)}>
                                         <option.icon />
                                         {option.title}
                                     </DropdownMenuItem>
                                 ))}
                             </DropdownMenuContent>
+                            <EditLinkModal
+                                open={editOpen}
+                                onOpenChange={setEditOpen}
+                                link={link}
+                            />
+                            <DeleteLinkModal
+                                open={deleteOpen}
+                                onOpenChange={setDeleteOpen}
+                                linkId={link.id}
+                            />
                         </DropdownMenu>
 
                     </div>

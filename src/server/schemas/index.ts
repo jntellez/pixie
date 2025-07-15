@@ -1,15 +1,6 @@
 import * as z from "zod";
 
 export const LinkSchema = z.object({
-  id: z.string(),
-  url: z.string().url(),
-  shortUrl: z.string(),
-  description: z.string().optional(),
-});
-
-// export type Link = z.infer<typeof LinkSchema>;
-
-export const CreateLinkSchema = z.object({
   url: z
     .string()
     .url("Please enter a valid URL.")
@@ -32,4 +23,8 @@ export const CreateLinkSchema = z.object({
     .string()
     .max(100, "Description cannot exceed 100 characters.")
     .optional(),
+});
+
+export const UpdateLinkSchema = LinkSchema.extend({
+  id: z.string(),
 });

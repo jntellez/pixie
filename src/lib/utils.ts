@@ -58,14 +58,6 @@ export async function handleLinkOptionClick(type: string, link: Link) {
       });
       break;
 
-    case "edit":
-      toast({ title: "QR", description: "QR code option selected." });
-      break;
-
-    case "delete":
-      toast({ title: "Delete", description: "Delete link clicked." });
-      break;
-
     default:
       break;
   }

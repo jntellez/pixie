@@ -1,9 +1,10 @@
 "use server";
 
 import { db } from "@/server/utils/db";
-import { CreateLinkSchema } from "../schemas";
+import { LinkSchema, UpdateLinkSchema } from "../schemas";
 import { nanoid } from "nanoid";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 export type State = {
   message?: string | null;
@@ -23,7 +24,7 @@ export async function createPublicLink(
   prevState: State,
   formData: FormData
 ): Promise<State> {
-  const validatedFields = CreateLinkSchema.safeParse({
+  const validatedFields = LinkSchema.safeParse({
     url: formData.get("url"),
     shortUrl: formData.get("shortUrl") ?? nanoid(6),
   });
@@ -82,7 +83,7 @@ export async function createLink(
     };
   }
 
-  const validatedFields = CreateLinkSchema.safeParse({
+  const validatedFields = LinkSchema.safeParse({
     url: formData.get("url"),
     shortUrl: formData.get("shortUrl"),
     description: formData.get("description") || undefined,
@@ -117,6 +118,8 @@ export async function createLink(
       },
     });
 
+    revalidatePath("/dashboard");
+
     return {
       message: "Link created successfully!",
       success: true,
@@ -129,4 +132,85 @@ export async function createLink(
       success: false,
     };
   }
+}
+
+export async function editLink(
+  prevState: State,
+  formData: FormData
+): Promise<State> {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return {
+      message: null,
+      errors: { url: ["Unauthorized"] },
+    };
+  }
+
+  const values = {
+    id: formData.get("id")?.toString() ?? "",
+    url: formData.get("url")?.toString() ?? "",
+    shortUrl: formData.get("shortUrl")?.toString() ?? "",
+    description: formData.get("description")?.toString() ?? "",
+  };
+
+  const validated = UpdateLinkSchema.safeParse(values);
+
+  if (!validated.success) {
+    return {
+      errors: validated.error.flatten().fieldErrors,
+      fields: values,
+    };
+  }
+
+  const { id, url, shortUrl, description } = validated.data;
+
+  const existingLink = await db.link.findUnique({
+    where: { id },
+  });
+
+  if (!existingLink || existingLink.userId !== session.user.id) {
+    return {
+      message: null,
+      errors: { url: ["Link not found or unauthorized"] },
+    };
+  }
+
+  await db.link.update({
+    where: { id },
+    data: {
+      url,
+      shortUrl,
+      description,
+    },
+  });
+
+  revalidatePath("/dashboard");
+
+  return {
+    success: true,
+    message: "Link updated successfully",
+  };
+}
+
+export async function deleteLink(id: string) {
+  const session = await auth();
+
+  if (!session || !session.user?.id) {
+    throw new Error("Unauthorized");
+  }
+
+  const link = await db.link.findUnique({
+    where: { id },
+  });
+
+  if (!link || link.userId !== session.user.id) {
+    throw new Error("Link not found or unauthorized");
+  }
+
+  await db.link.delete({
+    where: { id },
+  });
+
+  revalidatePath("/dashboard");
 }

@@ -6,6 +6,9 @@ import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import ExternalLink from "../ui/external-link";
 import { getDateWithFormat, handleLinkOptionClick } from "@/lib/utils";
+import { useState } from "react";
+import { EditLinkModal } from "./edit-link";
+import { DeleteLinkModal } from "./delete-link";
 
 interface ListLinkProps {
     link: Link;
@@ -13,6 +16,18 @@ interface ListLinkProps {
 
 export function ListLink({ link }: ListLinkProps) {
     const dateWithFormat = getDateWithFormat(link.createdAt)
+    const [editOpen, setEditOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const handleOptionClick = async (type: string) => {
+        if (type === "edit") {
+            setEditOpen(true);
+        } else if (type === "delete") {
+            setDeleteOpen(true);
+        } else {
+            await handleLinkOptionClick(type, link);
+        }
+    };
 
     return (
         <Card>
@@ -40,12 +55,22 @@ export function ListLink({ link }: ListLinkProps) {
                             key={index}
                             variant="ghost"
                             className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs ${option.className}`}
-                            onClick={() => handleLinkOptionClick(option.type, link)}
+                            onClick={() => handleOptionClick(option.type)}
                         >
                             <option.icon size={18} />
                         </Button>
                     ))}
                 </div>
+                <EditLinkModal
+                    open={editOpen}
+                    onOpenChange={setEditOpen}
+                    link={link}
+                />
+                <DeleteLinkModal
+                    open={deleteOpen}
+                    onOpenChange={setDeleteOpen}
+                    linkId={link.id}
+                />
             </CardContent>
         </Card>
 
