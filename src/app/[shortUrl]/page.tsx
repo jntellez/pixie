@@ -1,13 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/server/utils/db";
 
-type PageProps = {
-    params: {
-        shortUrl: string;
-    };
-};
+interface PageProps {
+    params: Record<string, string>;
+}
 
-export default async function RedirectPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
     const { shortUrl } = params;
 
     const link = await db.link.findUnique({
