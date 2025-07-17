@@ -16,25 +16,40 @@ import { TbBrandGithub } from "react-icons/tb";
 import { PiBugBeetle } from "react-icons/pi";
 import { TbLogout } from "react-icons/tb";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 export default function UserMenu() {
+    const { data: session } = useSession()
+    const router = useRouter()
+
+    if (!session?.user) {
+        return (
+            <Button onClick={() => router.push("/auth")}>
+                Sign In
+            </Button>
+        )
+    }
+
+    const user = session?.user
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Avatar className="h-8 w-8">
-                    <AvatarImage src="https://github.com/jntellez.png" />
-                    <AvatarFallback>J</AvatarFallback>
+                    <AvatarImage src={user?.image || ""} />
+                    <AvatarFallback>{user?.name?.charAt(0).toUpperCase() || "U"}</AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>
                     <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">
-                            {"jntellez"}
+                            {user?.name || "Unknown User"}
                         </p>
                         <p className="text-xs leading-none text-zinc-400 dark:text-slate-400">
-                            {"juantellez916@gmail.com"}
+                            {user?.email || "No email"}
                         </p>
                     </div>
                 </DropdownMenuLabel>

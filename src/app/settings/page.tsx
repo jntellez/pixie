@@ -1,6 +1,8 @@
 import OptionCard from "@/components/settings/option-card";
 import DeleteAccountCard from "@/components/settings/delete-account-card";
 import { cn } from "@/lib/utils";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 const settings = [
     {
@@ -15,7 +17,12 @@ const settings = [
     },
 ]
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+    const session = await auth()
+    if (!session?.user) {
+        redirect("/auth")
+    }
+
     return (
         <div className={cn("grid container grid-cols-1 gap-4")}>
             {settings.map((setting,) => <OptionCard key={setting.title} item={setting} />)}

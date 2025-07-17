@@ -1,8 +1,10 @@
+import { auth } from "@/auth";
 import { CardLink } from "@/components/links/card-link";
 import { EmptyLinks } from "@/components/links/empty-links";
 import { ListLink } from "@/components/links/list-link";
 import { cn } from "@/lib/utils";
 import { getUserLinks } from "@/server/data/links";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage(props: {
     searchParams?: Promise<{
@@ -11,6 +13,11 @@ export default async function DashboardPage(props: {
         view?: string;
     }>;
 }) {
+    const session = await auth()
+    if (!session?.user) {
+        redirect("/auth")
+    }
+
     const searchParams = await props.searchParams
     const query = searchParams?.query || ''
     const sort = searchParams?.sort || 'date'

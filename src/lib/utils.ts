@@ -14,29 +14,13 @@ export function getDateWithFormat(date: Date) {
   });
 }
 
-export async function copyQrToClipboard(qrUrl: string) {
+export async function handleQrAction(qrUrl: string, shortUrl: string) {
   try {
     const response = await fetch(qrUrl);
     const blob = await response.blob();
-
-    await navigator.clipboard.write([
-      new ClipboardItem({
-        [blob.type]: blob,
-      }),
-    ]);
-
-    return { success: true, message: "QR code copied to clipboard." };
-  } catch (err) {
-    console.error("Failed to copy QR code", err);
-    return { success: false, message: "Could not copy QR code." };
-  }
-}
-
-export async function handleQrAction(qrUrl: string) {
-  try {
-    const response = await fetch(qrUrl);
-    const blob = await response.blob();
-    const file = new File([blob], "qr-code.png", { type: blob.type });
+    const file = new File([blob], `qr-code-${shortUrl}.png`, {
+      type: blob.type,
+    });
 
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -49,7 +33,7 @@ export async function handleQrAction(qrUrl: string) {
         await navigator.share({
           files: [file],
           title: "QR Code",
-          text: "Scan this QR code or share it.",
+          text: `Scan this ${shortUrl} QR code or share it.`,
         });
 
         return {
@@ -117,7 +101,7 @@ export async function handleLinkOptionClick(type: string, link: Link) {
         `${process.env.NEXT_PUBLIC_PAGE_URL}/${link.shortUrl}`
       )}`;
 
-      const result = await handleQrAction(qrUrl);
+      const result = await handleQrAction(qrUrl, link.shortUrl);
 
       toast({
         title: result.success
