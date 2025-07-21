@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { CardLink } from "@/components/links/card-link";
+import { ClientAssociateLink } from "@/components/links/client-associate-link";
 import { EmptyLinks } from "@/components/links/empty-links";
 import { ListLink } from "@/components/links/list-link";
 import { cn } from "@/lib/utils";
@@ -49,6 +50,7 @@ export default async function DashboardPage(props: {
         <div className={cn("grid container grid-cols-1 gap-4",
             view === 'grid' && 'sm:grid-cols-2 lg:grid-cols-3'
         )}>
+            <ClientAssociateLink />
             {filteredLinks.map((link) => view === 'grid'
                 ? <CardLink key={link.id} link={link} />
                 : <ListLink key={link.id} link={link} />)}

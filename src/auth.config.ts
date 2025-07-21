@@ -14,10 +14,26 @@ export default {
     }),
   ],
   callbacks: {
-    async session({ session, token }) {
-      if (token.sub) {
-        session.user.id = token.sub;
+    async jwt({ token, user, trigger, session }) {
+      // Al iniciar sesión por primera vez, guarda los datos iniciales
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
       }
+
+      // Cuando llamas a update({ name: "nuevo" }) desde el client
+      if (trigger === "update" && session.name) {
+        token.name = session.name;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      session.user.id = token.id as string;
+      session.user.name = token.name as string;
+      session.user.email = token.email as string;
       return session;
     },
   },

@@ -214,3 +214,21 @@ export async function deleteLink(id: string) {
 
   revalidatePath("/dashboard");
 }
+
+export async function associateLinkToUser(shortUrl: string) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    throw new Error("Not authenticated");
+  }
+
+  await db.link.update({
+    where: { shortUrl },
+    data: {
+      createdBy: {
+        connect: { id: session.user.id },
+      },
+    },
+  });
+
+  return { success: true };
+}

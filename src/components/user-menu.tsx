@@ -19,6 +19,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import ExternalLink from "./ui/external-link";
 
 export default function UserMenu() {
     const { data: session } = useSession()
@@ -73,13 +74,17 @@ export default function UserMenu() {
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    <TbBrandGithub />
-                    <span>View project</span>
+                <DropdownMenuItem asChild>
+                    <ExternalLink href="https://github.com/jntellez/pixie">
+                        <TbBrandGithub />
+                        <span>View project</span>
+                    </ExternalLink>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <PiBugBeetle />
-                    <span>Report a bug</span>
+                <DropdownMenuItem asChild>
+                    <ExternalLink href="https://github.com/jntellez/pixie/issues/new">
+                        <PiBugBeetle />
+                        <span>Report a bug</span>
+                    </ExternalLink>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/", redirect: true })}>
