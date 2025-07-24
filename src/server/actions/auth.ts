@@ -2,7 +2,6 @@
 
 import { auth } from "@/auth";
 import { db } from "@/server/utils/db";
-import { revalidatePath } from "next/cache";
 
 export async function updateUserName(name: string) {
   const session = await auth();
@@ -15,6 +14,4 @@ export async function updateUserName(name: string) {
     where: { id: session.user.id },
     data: { name },
   });
-
-  revalidatePath("/settings");
 }

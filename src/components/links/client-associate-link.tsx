@@ -6,7 +6,7 @@ import { associateLinkToUser } from "@/server/actions/links";
 
 export function ClientAssociateLink() {
     const { data: session } = useSession();
-    const [_isPending, startTransition] = useTransition();
+    const [, startTransition] = useTransition();
 
     useEffect(() => {
         if (!session?.user) return;

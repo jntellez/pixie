@@ -25,15 +25,15 @@ export default function OptionCard({ item }: OptionCardProps) {
     const [loading, setLoading] = useState(false)
     const { update } = useSession()
 
+    const hasChanged = inputValue !== value;
+
     const handleSave = async () => {
-        if (field === "email") return;
+        if (!hasChanged || field === "email") return;
 
         try {
             setLoading(true);
-
-            await updateUserName(inputValue); // Server action
-
-            await update({ name: inputValue }); // Esto activa trigger === "update"
+            await updateUserName(inputValue);
+            await update({ name: inputValue })
 
             toast({
                 title: "Saved",
@@ -66,7 +66,11 @@ export default function OptionCard({ item }: OptionCardProps) {
                 />
             </CardContent>
             <CardFooter className="flex justify-end py-2 px-6 border-t-[1px] border-slate-200 dark:border-slate-800">
-                <Button variant="outline" onClick={handleSave} disabled={loading || field === "email"}>
+                <Button
+                    variant="outline"
+                    onClick={handleSave}
+                    disabled={loading || field === "email" || !hasChanged}
+                >
                     {loading ? (
                         <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     ) : (
@@ -74,7 +78,6 @@ export default function OptionCard({ item }: OptionCardProps) {
                     )}
                     Save
                 </Button>
-
             </CardFooter>
         </Card>
     )
