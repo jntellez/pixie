@@ -5,6 +5,7 @@ import { LinkSchema, UpdateLinkSchema } from "../schemas";
 import { nanoid } from "nanoid";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
 
 export type State = {
   message?: string | null;
@@ -93,6 +94,7 @@ export async function createLink(
     const errors = validatedFields.error.flatten().fieldErrors;
 
     return {
+      success: false,
       errors: {
         url: errors.url,
         shortUrl: errors.shortUrl,
@@ -102,7 +104,6 @@ export async function createLink(
         shortUrl: formData.get("shortUrl") as string,
         description: formData.get("description") as string,
       },
-      success: false,
     };
   }
 
@@ -121,15 +122,39 @@ export async function createLink(
     revalidatePath("/dashboard");
 
     return {
-      message: "Link created successfully!",
       success: true,
+      message: "Link created successfully!",
     };
-  } catch (err) {
-    console.error(err);
+  } catch (err: unknown) {
+    console.error("Link creation failed");
+
+    if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002" &&
+      Array.isArray(err.meta?.target) &&
+      err.meta.target.includes("shortUrl")
+    ) {
+      return {
+        success: false,
+        errors: {
+          shortUrl: ["This short URL is already taken."],
+        },
+        fields: {
+          url,
+          shortUrl,
+          description,
+        },
+      };
+    }
 
     return {
-      message: "An error occurred. Try again later.",
       success: false,
+      message: "An unexpected error occurred.",
+      fields: {
+        url,
+        shortUrl,
+        description,
+      },
     };
   }
 }
@@ -142,7 +167,8 @@ export async function editLink(
 
   if (!session?.user?.email) {
     return {
-      message: null,
+      success: false,
+      message: "Unauthorized.",
       errors: { url: ["Unauthorized"] },
     };
   }
@@ -158,6 +184,8 @@ export async function editLink(
 
   if (!validated.success) {
     return {
+      success: false,
+      message: "Validation failed.",
       errors: validated.error.flatten().fieldErrors,
       fields: values,
     };
@@ -165,32 +193,67 @@ export async function editLink(
 
   const { id, url, shortUrl, description } = validated.data;
 
-  const existingLink = await db.link.findUnique({
-    where: { id },
-  });
+  try {
+    const existingLink = await db.link.findUnique({
+      where: { id },
+    });
 
-  if (!existingLink || existingLink.userId !== session.user.id) {
+    if (!existingLink || existingLink.userId !== session.user.id) {
+      return {
+        success: false,
+        message: "Link not found or unauthorized.",
+        errors: { url: ["Link not found or unauthorized"] },
+        fields: values,
+      };
+    }
+
+    await db.link.update({
+      where: { id },
+      data: {
+        url,
+        shortUrl,
+        description,
+      },
+    });
+
+    revalidatePath("/dashboard");
+
     return {
-      message: null,
-      errors: { url: ["Link not found or unauthorized"] },
+      success: true,
+      message: "Link updated successfully",
+    };
+  } catch (err: unknown) {
+    console.error("Edit link error:");
+
+    if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002" &&
+      Array.isArray(err.meta?.target) &&
+      err.meta.target.includes("shortUrl")
+    ) {
+      return {
+        success: false,
+        errors: {
+          shortUrl: ["This short URL is already in use."],
+        },
+        fields: {
+          url,
+          shortUrl,
+          description,
+        },
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred.",
+      fields: {
+        url,
+        shortUrl,
+        description,
+      },
     };
   }
-
-  await db.link.update({
-    where: { id },
-    data: {
-      url,
-      shortUrl,
-      description,
-    },
-  });
-
-  revalidatePath("/dashboard");
-
-  return {
-    success: true,
-    message: "Link updated successfully",
-  };
 }
 
 export async function deleteLink(id: string) {
