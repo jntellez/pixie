@@ -2,6 +2,7 @@ import { Logo } from "@/components/icons/logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import UserMenu from "@/components/user-menu";
 import Link from "next/link";
+import { LinkCounter } from "@/components/link-counter";
 
 export default function Header() {
     return (
@@ -14,6 +15,7 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className="flex flex-row items-center space-x-5">
+                    <LinkCounter />
                     <ModeToggle />
                     <UserMenu />
                 </div>

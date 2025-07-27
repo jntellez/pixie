@@ -21,6 +21,8 @@ export type State = {
   };
 };
 
+const LINK_LIMIT = 12;
+
 export async function createPublicLink(
   prevState: State,
   formData: FormData
@@ -108,6 +110,22 @@ export async function createLink(
   }
 
   const { url, shortUrl, description } = validatedFields.data;
+
+  const linkCount = await db.link.count({
+    where: { userId: session.user.id },
+  });
+
+  if (linkCount >= LINK_LIMIT) {
+    return {
+      success: false,
+      message: "You have reached the maximum number of links.",
+      fields: {
+        url,
+        shortUrl,
+        description,
+      },
+    };
+  }
 
   try {
     await db.link.create({
@@ -284,6 +302,17 @@ export async function associateLinkToUser(shortUrl: string) {
     throw new Error("Not authenticated");
   }
 
+  const linkCount = await db.link.count({
+    where: { userId: session.user.id },
+  });
+
+  if (linkCount >= LINK_LIMIT) {
+    return {
+      success: false,
+      message: "You have reached the maximum number of links.",
+    };
+  }
+
   await db.link.update({
     where: { shortUrl },
     data: {
@@ -294,4 +323,15 @@ export async function associateLinkToUser(shortUrl: string) {
   });
 
   return { success: true };
+}
+
+export async function getUserLinkCount(): Promise<number> {
+  const session = await auth();
+  if (!session?.user?.id) return 0;
+
+  const count = await db.link.count({
+    where: { userId: session.user.id },
+  });
+
+  return count;
 }

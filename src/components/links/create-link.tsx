@@ -101,7 +101,7 @@ export default function CreateLink() {
                         />
                     </div>
 
-                    <DialogFooter className="gap-2">
+                    <DialogFooter>
                         <DialogClose asChild>
                             <Button type="button" variant="outline">Cancel</Button>
                         </DialogClose>
@@ -114,6 +114,9 @@ export default function CreateLink() {
                             Create Link
                         </Button>
                     </DialogFooter>
+                    {state?.message && !state.success && (
+                        <p className="text-sm text-red-600 text-right -mt-2">{state.message}</p>
+                    )}
                 </form>
             </DialogContent>
         </Dialog>
