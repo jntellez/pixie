@@ -79,7 +79,7 @@ export function EditLinkModal({ open, onOpenChange, link }: EditLinkModalProps) 
                         />
                     </div>
 
-                    <DialogFooter className="gap-2">
+                    <DialogFooter className="gap-y-2">
                         <DialogClose asChild>
                             <Button type="button" variant="outline">Cancel</Button>
                         </DialogClose>
