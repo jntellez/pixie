@@ -6,7 +6,7 @@ import { LinkCounter } from "@/components/link-counter";
 
 export default function Header() {
     return (
-        <header className="sticky top-0 z-50 dark:bg-slate-900 border-b-[1px] border-slate-200 dark:border-slate-800">
+        <header className="sticky top-0 z-50 dark:bg-slate-900 bg-white border-b-[1px] border-slate-200 dark:border-slate-800">
             <div className="flex flex-row justify-between py-4 container">
                 <div className="">
                     <Link href="/" className="flex flex-row items-center">
