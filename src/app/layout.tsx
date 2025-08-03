@@ -42,8 +42,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Pixie",
     description: "A minimal and modern open-source URL shortener",
-    url: "https://pixie-link.vercel.app/images/og-image.png",
+    url: "https://pixie-link.vercel.app",
     siteName: "Pixie",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Pixie Open Graph Image",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },

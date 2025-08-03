@@ -3,7 +3,7 @@
 # Pixie - Url Shortener
 
 <a href="https://pixie-link.vercel.app">
-<img src="public/web-screenshot.png">
+<img src="public/images/web-screenshot.png">
 </a>
 
 ![next.js](https://img.shields.io/badge/Next.js-15.1.3-black?style=for-the-badge&logo=next.js)
