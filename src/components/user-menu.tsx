@@ -22,8 +22,14 @@ import { useRouter } from "next/navigation";
 import ExternalLink from "./ui/external-link";
 
 export default function UserMenu() {
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
     const router = useRouter()
+
+    if (status === "loading") {
+        return <Avatar className="h-8 w-8">
+            <AvatarFallback />
+        </Avatar>
+    }
 
     if (!session?.user) {
         return (
