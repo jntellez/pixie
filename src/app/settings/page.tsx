@@ -4,6 +4,10 @@ import { cn } from "@/lib/utils";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation"
 
+export const metadata = {
+    title: 'Settings',
+};
+
 export default async function SettingsPage() {
     const session = await auth();
 

@@ -7,6 +7,10 @@ import { cn } from "@/lib/utils";
 import { getUserLinks } from "@/server/data/links";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+    title: 'Dashboard',
+};
+
 export default async function DashboardPage(props: {
     searchParams?: Promise<{
         query?: string;

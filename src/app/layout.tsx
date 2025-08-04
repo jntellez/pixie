@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://pixie-link.vercel.app"),
   title: {
     default: "Pixie - Shorten & manage your links easily",
-    template: "%s | Pixie",
+    template: "%s - Pixie",
   },
   manifest: "/manifest.json",
   description: "Pixie is a minimal and modern open-source URL shortener.",
