@@ -11,6 +11,7 @@ import { Link as LinkType } from "@prisma/client"
 import { getLinkByShortUrl } from "@/server/data/links"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { Loader2 } from "lucide-react"
 
 const initialState: LinkState = {
     message: null,
@@ -22,6 +23,8 @@ const initialState: LinkState = {
 
 export function HomeForm() {
     const [state, formAction] = useActionState(createStoragedLink, initialState)
+    const [loading, setLoading] = useState(false)
+
     const [link, setLink] = useState<LinkType | null>(null)
     const { data: session } = useSession()
     const router = useRouter()
@@ -75,10 +78,21 @@ export function HomeForm() {
                     <Button
                         variant="default"
                         className="w-full"
-                        onClick={() => session?.user ? router.push("/dashboard") : router.push("/auth")}
+                        onClick={() => {
+                            setLoading(true)
+                            if (session?.user) router.push("/dashboard")
+                            else router.push("/auth")
+                        }}
+                        disabled={loading}
                     >
-                        <FiArrowRight /> Sign In
+                        {loading ? (
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                            <FiArrowRight className="mr-2" />
+                        )}
+                        Sign In
                     </Button>
+
                 </div>
             </form>
 

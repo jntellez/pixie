@@ -25,7 +25,7 @@ export default function LoginPage() {
     }
 
     return (
-        <main className="flex items-center justify-center h-[calc(100vh-4.4rem)] font-[family-name:var(--font-geist-sans)]">
+        <main className="flex items-center justify-center h-[calc(100vh-10rem)] font-[family-name:var(--font-geist-sans)]">
             <Card className="w-[350px] mb-[280px]">
                 <div className="inline-block ml-6 mt-6 mb-[-18px]">
                     <Logo />
