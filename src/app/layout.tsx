@@ -23,22 +23,21 @@ export const metadata: Metadata = {
     default: "Pixie - Shorten & manage your links easily",
     template: "%s - Pixie",
   },
+  appleWebApp: {
+    title: 'Pixie',
+    capable: true,
+    statusBarStyle: 'default',
+  },
   manifest: "/manifest.json",
   description: "Pixie is a minimal and modern open-source URL shortener.",
-  icons: [
-    {
-      rel: "icon",
-      type: "image/svg+xml",
-      sizes: "any",
-      url: "/images/favicon.svg",
-    },
-    {
-      rel: "apple-touch-icon",
-      type: "image/png",
-      sizes: "180x180",
-      url: "/images/apple-touch-icon.png",
-    },
-  ],
+  icons: {
+    icon: [
+      { url: '/images/favicon.svg', type: 'image/svg+xml' },
+      { url: '/images/favicon-96x96.png', type: 'image/png', sizes: '96x96' }
+    ],
+    shortcut: '/images/favicon.ico',
+    apple: '/images/apple-touch-icon.png',
+  },
   openGraph: {
     title: "Pixie",
     description: "A minimal and modern open-source URL shortener",
